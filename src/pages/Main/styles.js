@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, {keyframes,css}from 'styled-components';
 
 
 export const Container = styled.div`
@@ -34,7 +34,24 @@ export const Form = styled.form`
     font-size: 17px;
   }
 `;
-export const SubmitButton = styled.button.attrs({type:'submit'})`
+
+//animacao botao Plus
+const animate = keyframes`
+from{
+    transform:rotate(0deg);   
+}to{
+  transform: rotate(360deg);
+ }
+
+`;
+
+
+
+
+export const SubmitButton = styled.button.attrs(props=>
+    ({type:'submit',
+        disabled:props.loading,
+    }))`
   border: 1px solid #DDD;
   padding: 10px 15px;
   font-size: 15px;
@@ -42,12 +59,21 @@ export const SubmitButton = styled.button.attrs({type:'submit'})`
   border-radius: 4px;
   margin-left: 10px;
   padding: 5px 15px;
-  transition-delay: 0.2ms;
+  //transition-delay: 0.2ms;
 
-  &:active {
-    background: white;
+ 
+  &[disabled]{
+    cursor: not-allowed;
+    opacity: 0.5;
   }
-;
-
-`;
+  
+${props => props.loading && 
+        css`
+          svg {
+            animation: ${animate} 2s linear infinite;
+          }
+        `
+        }
+    
+    `;
 
